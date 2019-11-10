@@ -69,18 +69,21 @@ static void dump_data_record(uint16_t address, uint8_t * datasrc, uint8_t nr_byt
  */
 static void dump_file(BinFile * self)
 {
+    /* use copy of binary file description for processing, values are changed during processing */
+    BinFile tmp = *self;
+
     uint8_t nr_of_bytes_in_record;
     uint8_t * data = (uint8_t *)self->data;
     uint16_t byte_offset = 0;
 
-    while(self->nr_of_bytes > 0)
+    while(tmp.nr_of_bytes > 0)
     {
-        nr_of_bytes_in_record = min(self->nr_of_bytes, 8);
-        dump_data_record(self->address, &data[byte_offset], nr_of_bytes_in_record);
-        self->address += nr_of_bytes_in_record;
+        nr_of_bytes_in_record = min(tmp.nr_of_bytes, 8);
+        dump_data_record(tmp.address, &data[byte_offset], nr_of_bytes_in_record);
+        tmp.address += nr_of_bytes_in_record;
         byte_offset += nr_of_bytes_in_record;
 
-        self->nr_of_bytes -= nr_of_bytes_in_record;
+        tmp.nr_of_bytes -= nr_of_bytes_in_record;
     }
 }
 
