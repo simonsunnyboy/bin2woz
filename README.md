@@ -17,12 +17,12 @@ The output can directly be fed into a serial link if necessary.
 
 ## Usage
 
-$ bin2woz <loading address> <input file>
+	$ bin2woz <loading address> <input file>
 
 The loading address is given in 4 hexadecimal digits without prefix.
 The output is dumped to stdout including CR/LF for Wozmon.
 
 ## Example:
 
-$ bin2woz 0280 my_program.bin
+	$ bin2woz 0280 my_program.bin
 
