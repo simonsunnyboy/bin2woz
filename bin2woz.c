@@ -10,6 +10,8 @@
  *
  */
 
+#define VERSION "V1.00"
+
 #include <stdint.h>
 #include <stdbool.h>
 #include <assert.h>
@@ -17,17 +19,32 @@
 #include <stdlib.h>
 
 #ifndef min
+/**
+ * @brief min(a,b) function as macro
+ * @details The minimum of a and b is computed.
+ * @param a
+ * @param b
+ */
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 #endif
 
+/**
+ * @brief helper data structure of binary file to process
+ */
 typedef struct
 {
-    void * data;
-    uint16_t address;
-    uint16_t nr_of_bytes;
+    void * data;            /**< points to binary data in RAM */
+    uint16_t address;       /**< start address of data for Wozmon */
+    uint16_t nr_of_bytes;   /**< number of bytes in binary data in RAM */
 } BinFile;
 
-
+/**
+ * @brief dumps a record of data bytes to stdout in Wozmon format
+ * @details Format is <addr>: <data1> .. <dataN> <CR> <LF>
+ * @param address to output
+ * @param datasrc points to data bytes to dump
+ * @param nr_bytes number of bytes to dump for the given record
+ */
 static void dump_data_record(uint16_t address, uint8_t * datasrc, uint8_t nr_bytes)
 {
     if(nr_bytes > 0)
@@ -45,6 +62,11 @@ static void dump_data_record(uint16_t address, uint8_t * datasrc, uint8_t nr_byt
     return;
 }
 
+/**
+ * @brief dumps the give binary file in Wozmon format to stdout
+ * @details The file is divided in records of up to 8 bytes per record.
+ * @param self points to instance to dump
+ */
 static void dump_file(BinFile * self)
 {
     uint8_t nr_of_bytes_in_record;
@@ -62,6 +84,12 @@ static void dump_file(BinFile * self)
     }
 }
 
+/**
+ * @brief main command line processing function
+ * @param argc   number of command line arguments
+ * @param argv   pointer to array of command line argument fields
+ * @return 0 on success
+ */
 int main(int argc, char *argv[])
 {
     int retval = -1;
@@ -71,7 +99,10 @@ int main(int argc, char *argv[])
 
     if(argc != 3)
     {
+        printf("Binary to Wozmon %s\n", VERSION);
+        printf("(c) 2019 by Matthias Arndt <marndt@asmsoftware.de>\n\n");
         printf("Usage: %s <start address> <input file>\n", argv[0]);
+
     }
     else
     {
@@ -107,7 +138,6 @@ int main(int argc, char *argv[])
                 retval = 0;
                 dump_file(&binfile);
             }
-
 
             fclose(fp);
         }
