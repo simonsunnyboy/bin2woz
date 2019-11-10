@@ -139,6 +139,8 @@ int main(int argc, char *argv[])
                 dump_file(&binfile);
             }
 
+            free(binfile.data);
+
             fclose(fp);
         }
         else
