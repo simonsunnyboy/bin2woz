@@ -9,7 +9,7 @@ The MIT License applies to this project.
 This is a little file tool to dump a binary file in the format used by the 
 Wozmon monitor software used by the Apple 1.
 
-The output can diectly be fed into a serial link if necessary.
+The output can directly be fed into a serial link if necessary.
 
 ## System requirements
 
@@ -19,5 +19,5 @@ The output can diectly be fed into a serial link if necessary.
 
 $ wozmon <loading address> <input file>
 
-The loading address is interpreted in hexadecimal.
-The output s displayed on stdout.
+The loading address is given in 4 hexadecimal digits without prefix.
+The output is dumped to stdout including CR/LF for Wozmon.
